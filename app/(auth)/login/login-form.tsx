@@ -4,8 +4,8 @@ import Link from "next/link";
 
 const LoginForm = () => {
   return (
-    <div className=" w-full flex flex-col lg:flex-row p-1 lg:p-10">
-      <div className="flex-1 flex items-center justify-center flex-col space-y-2 min-h-[120px]">
+    <div className=" w-full flex flex-col lg:flex-row p-1 lg:p-10 gap-5">
+      <div className="flex-1 flex items-center justify-center flex-col space-y-2 min-h-30">
         <p className="text-2xl  font-bold text-slate-700">Expense Tracker</p>
         <p className=" text-slate-500">Login to your account</p>
       </div>
