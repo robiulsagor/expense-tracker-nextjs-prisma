@@ -26,7 +26,7 @@ const Tracker = () => {
     <div className="bg-slate-50 p-6 rounded-lg shadow-md flex flex-col gap-6">
       <h2 className="text-lg font-semibold">Tracker</h2>
 
-      <div className="flex w-full border rounded-xl overflow-hidden">
+      <div className="flex w-full border rounded-lg overflow-hidden">
         <button
           onClick={() => setData({ ...data, type: "expense" })}
           className={`flex-1 text-center py-1.5 cursor-pointer  ${data.type === "expense" ? "bg-teal-700 text-white" : "hover:bg-teal-50"}`}
