@@ -1,33 +1,43 @@
 "use client";
 
 import TitleCard from "@/components/shared/auth/title-card";
+import FieldError from "@/components/shared/auth/FieldError";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
-import { LoginFormData, loginSchema } from "@/lib/validations/auth";
+import { RegisterFormData, registerSchema } from "@/lib/validations/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import Link from "next/link";
 import { useForm } from "react-hook-form";
-import FieldError from "@/components/shared/auth/FieldError";
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit = (data: LoginFormData) => {
+  const onSubmit = (data: RegisterFormData) => {
     console.log(data);
   };
-
   return (
     <div className=" w-full flex flex-col lg:flex-row p-1 lg:p-10 gap-5">
-      <TitleCard subtitle="Login to your account" />
+      <TitleCard subtitle="Create a new account" />
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex-1 space-y-4">
+        <div>
+          <Input
+            type="text"
+            placeholder="Name"
+            className="w-full"
+            {...register("name")}
+          />
+          {errors.name && (
+            <FieldError message={errors.name.message as string}/>
+          )}
+        </div>
+
         <div>
           <Input
             type="email"
@@ -48,7 +58,9 @@ const LoginForm = () => {
             {...register("password")}
           />
           {errors.password && (
-            <FieldError message={errors.password.message as string}/>
+            <span className="text-red-500 text-xs">
+              <FieldError message={errors.password.message as string}/>
+            </span>
           )}
         </div>
 
@@ -56,18 +68,14 @@ const LoginForm = () => {
           type="submit"
           className="bg-blue-500 text-white px-4 py-2 rounded-md w-full"
         >
-          Login
+          Register
         </Button>
         <div className="flex flex-col space-y-2 text-sm text-slate-500">
           <p>
             Don&apos;t have an account?{" "}
-            <Link href="/register" className="text-blue-500">
-              Register
+            <Link href="/login" className="text-blue-500">
+              Login
             </Link>
-          </p>
-          <p>
-            Forgot your password?{" "}
-            <span className="text-blue-500">Reset it</span>
           </p>
         </div>
       </form>
@@ -75,4 +83,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
