@@ -8,8 +8,18 @@ const SingleCard = ({
   amount: number;
   type: "income" | "expense" | "balance";
 }) => {
+    console.log("amount", amount, "type", type, "its type", typeof amount);
+    const bgColor =
+  type === "income"
+    ? "bg-green-100"
+    : type === "expense"
+    ? "bg-red-100"
+    : amount >= 0
+    ? "bg-blue-100"
+    : "bg-red-100";
   return (
-    <div className="flex-1 bg-slate-50 p-6 rounded-lg shadow-md flex  justify-between items-center">
+    <div className={`flex-1  p-6 rounded-lg shadow-md flex  justify-between items-center 
+    ${bgColor}`}>
       <div className="flex flex-col gap-2">
         <h2 className="text-4xl font-bold">{amount}</h2>
         <p className="text-sm text-slate-500 capitalize">{type}</p>
