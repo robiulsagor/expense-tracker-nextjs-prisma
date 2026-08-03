@@ -39,7 +39,7 @@ const MonthSelector = ({
         <ChevronLeft size={20} className="text-slate-600 " />
       </button>
 
-      <p className="text-slate-500 min-w-50 text-center">
+      <p className="text-slate-500 min-w-40 text-center">
         {formatMonth(currentMonth)}
       </p>
 
