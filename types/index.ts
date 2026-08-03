@@ -6,5 +6,6 @@ export interface TransactionData {
     category: string;
     specifically: string;
     amount: number;
+    date: Date;
     note: string;
 }

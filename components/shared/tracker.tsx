@@ -10,9 +10,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Field, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
 
 const Tracker = () => {
   const [data, setData] = useState({
@@ -21,6 +30,8 @@ const Tracker = () => {
     description: "",
     date: new Date().toISOString().split("T")[0],
   });
+
+  const [date, setDate] = useState<Date>();
 
   return (
     <div className="bg-slate-50 p-6 rounded-lg shadow-md flex flex-col gap-6">
@@ -67,7 +78,34 @@ const Tracker = () => {
         <FieldLabel className="text-slate-600" htmlFor="specifically">
           Specifically (Optional)
         </FieldLabel>
-        <Input id="specifically" type="text" placeholder="Enter what specifically..." />
+        <Input
+          id="specifically"
+          type="text"
+          placeholder="Enter what specifically..."
+        />
+      </Field>
+
+      <Field>
+        <FieldLabel className="text-slate-600" htmlFor="specifically">
+          Date
+        </FieldLabel>
+        <Popover>
+          <PopoverTrigger
+            render={
+              <Button
+                variant="outline"
+                data-empty={!date}
+                className="justify-start text-left font-normal data-[empty=true]:text-muted-foreground"
+              />
+            }
+          >
+            <CalendarIcon />
+            {date ? format(date, "PPP") : <span>Pick a date</span>}
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0">
+            <Calendar mode="single" selected={date} onSelect={setDate} />
+          </PopoverContent>
+        </Popover>
       </Field>
 
       <Field>
