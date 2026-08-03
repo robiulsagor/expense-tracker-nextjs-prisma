@@ -12,6 +12,7 @@ const list : TransactionData[] = [
     category: "salary",
     specifically: "monthly salary",
     amount: 5000,
+    date: new Date("2026-07-01"),
     note: "received on 1st of every month",
   },
   {
@@ -20,6 +21,7 @@ const list : TransactionData[] = [
     category: "Outsourcing",
     specifically: "freelance work",
     amount: 10000,
+    date: new Date("2026-07-01"),
     note: "received on 1st of every month",
   },
   {
@@ -28,6 +30,7 @@ const list : TransactionData[] = [
     category: "medicine",
     specifically: "medication",
     amount: 1000,
+    date: new Date("2026-07-01"),
     note: "",
   },
   {
@@ -36,6 +39,7 @@ const list : TransactionData[] = [
     category: "bond",
     specifically: "",
     amount: 5000,
+    date: new Date("2026-07-01"),
     note: "received on 1st of every month",
   },
   {
@@ -44,6 +48,7 @@ const list : TransactionData[] = [
     category: "food",
     specifically: "bought food",
     amount: 2000,
+    date: new Date("2026-08-01"),
     note: "bought food for the family",
   },
 ];

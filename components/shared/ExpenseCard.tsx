@@ -1,5 +1,8 @@
+"use client";
+
 import { TransactionData } from "@/types";
 import { CircleDollarSign } from "lucide-react";
+import CardItems from "./CardItems";
 
 const ExpenseCard = ({ data }: { data: TransactionData[] }) => {
   return (
@@ -15,6 +18,8 @@ const ExpenseCard = ({ data }: { data: TransactionData[] }) => {
           </p>
         </div>
       </div>
+
+       <CardItems data={data} />
     </div>
   );
 };
