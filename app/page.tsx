@@ -2,7 +2,51 @@ import HeroCards from "@/components/shared/cards/HeroCards";
 import ExpenseCard from "@/components/shared/ExpenseCard";
 import IncomeCard from "@/components/shared/IncomeCard";
 import Tracker from "@/components/shared/tracker";
-import DetailsWrapper from "./DetailsWrapper";
+import ViewDetails from "@/components/shared/ViewDetails";
+import { TransactionData } from "@/types";
+
+const list : TransactionData[] = [
+  {
+    id: 1,
+    type: "income",
+    category: "salary",
+    specifically: "monthly salary",
+    amount: 5000,
+    note: "received on 1st of every month",
+  },
+  {
+    id: 2,
+    type: "income",
+    category: "Outsourcing",
+    specifically: "freelance work",
+    amount: 10000,
+    note: "received on 1st of every month",
+  },
+  {
+    id: 3,
+    type: "expense",
+    category: "medicine",
+    specifically: "medication",
+    amount: 1000,
+    note: "",
+  },
+  {
+    id: 4,
+    type: "income",
+    category: "bond",
+    specifically: "",
+    amount: 5000,
+    note: "received on 1st of every month",
+  },
+  {
+    id: 5,
+    type: "expense",
+    category: "food",
+    specifically: "bought food",
+    amount: 2000,
+    note: "bought food for the family",
+  },
+];
 
 export default function Home() {
   return (
@@ -11,12 +55,12 @@ export default function Home() {
       <div className="col-span-2 flex flex-col gap-1  ">
         <HeroCards />
         <div className="grid grid-cols-1 md:grid-cols-2 items-baseline gap-5 mt-5">
-          <IncomeCard/>
-          <ExpenseCard/>
+          <IncomeCard data={list.filter((item)=> item.type === "income")}/>
+          <ExpenseCard data={list.filter((item)=> item.type === "expense")}/>
         </div>
       </div>
 
-      <DetailsWrapper />
+      <ViewDetails />
     </div>
   );
 }

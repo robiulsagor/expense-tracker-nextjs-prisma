@@ -1,10 +1,14 @@
+"use client";
+
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useTracker } from "@/store";
+import { Button } from "../ui/button";
 
 const ViewDetails = () => {
   const isOpen = useTracker((state) => state.isOpen);
@@ -43,6 +47,23 @@ const ViewDetails = () => {
             </div>
           </div>
         </div>
+
+        <DialogFooter>
+          <Button
+            onClick={toggleOpen}
+            className="bg-blue-500 text-white px-4 py-2 rounded-md"
+          >
+          Edit
+          </Button>
+          <Button
+          variant="destructive"
+            onClick={toggleOpen}
+            className=" px-4 py-2 rounded-md"
+          >
+          Delete
+          </Button>
+          
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
