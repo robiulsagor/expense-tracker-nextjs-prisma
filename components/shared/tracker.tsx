@@ -34,36 +34,36 @@ const Tracker = () => {
   const [date, setDate] = useState<Date>();
 
   return (
-    <div className="bg-slate-50 p-6 rounded-lg shadow-md flex flex-col gap-6">
+    <div className="bg-slate-50 p-6 rounded-lg shadow-md flex flex-col gap-3 md:gap">
       <h2 className="text-lg font-semibold">Tracker</h2>
 
-      <div className="flex w-full border rounded-lg overflow-hidden">
+      <div className="flex w-full border rounded-lg overflow-hidden text-xs md:text-sm">
         <button
           onClick={() => setData({ ...data, type: "expense" })}
-          className={`flex-1 text-center py-1.5 cursor-pointer  ${data.type === "expense" ? "bg-teal-700 text-white" : "hover:bg-teal-50"}`}
+          className={`flex-1 text-center py-2 cursor-pointer  ${data.type === "expense" ? "bg-teal-700 text-white" : "hover:bg-teal-50"}`}
         >
           Expense
         </button>
         <button
           onClick={() => setData({ ...data, type: "income" })}
-          className={`flex-1 text-center py-1.5 cursor-pointer  ${data.type === "income" ? "bg-teal-700 text-white" : "hover:bg-teal-50 "}`}
+          className={`flex-1 text-center py-2 cursor-pointer  ${data.type === "income" ? "bg-teal-700 text-white" : "hover:bg-teal-50 "}`}
         >
           Income
         </button>
       </div>
 
       <Field>
-        <FieldLabel className="text-slate-600" htmlFor="category">
+        <FieldLabel className="text-slate-600 text-xs md:text-sm" htmlFor="category">
           Category
         </FieldLabel>
 
         <Select id="category" name="category">
           <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select a fruit" />
+            <SelectValue className="text-xs md:text-sm" placeholder="Select a fruit" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectLabel>Fruits</SelectLabel>
+              <SelectLabel>Categories</SelectLabel>
               <SelectItem value="apple">Apple</SelectItem>
               <SelectItem value="banana">Banana</SelectItem>
               <SelectItem value="blueberry">Blueberry</SelectItem>
@@ -75,10 +75,11 @@ const Tracker = () => {
       </Field>
 
       <Field>
-        <FieldLabel className="text-slate-600" htmlFor="specifically">
+        <FieldLabel className="text-slate-600 text-xs md:text-sm" htmlFor="specifically">
           Specifically (Optional)
         </FieldLabel>
         <Input
+        className="text-xs md:text-sm"
           id="specifically"
           type="text"
           placeholder="Enter what specifically..."
@@ -86,7 +87,7 @@ const Tracker = () => {
       </Field>
 
       <Field>
-        <FieldLabel className="text-slate-600" htmlFor="specifically">
+        <FieldLabel className="text-slate-600 text-xs md:text-sm" htmlFor="date">
           Date
         </FieldLabel>
         <Popover>
@@ -100,7 +101,7 @@ const Tracker = () => {
             }
           >
             <CalendarIcon />
-            {date ? format(date, "PPP") : <span>Pick a date</span>}
+            {date ? format(date, "PPP") : <span className="text-xs md:text-sm">Pick a date</span>}
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0">
             <Calendar mode="single" selected={date} onSelect={setDate} />
@@ -109,17 +110,17 @@ const Tracker = () => {
       </Field>
 
       <Field>
-        <FieldLabel className="text-slate-600" htmlFor="amount">
+        <FieldLabel className="text-slate-600 text-xs md:text-sm" htmlFor="amount">
           Amount
         </FieldLabel>
-        <Input id="amount" type="number" placeholder="Enter amount" />
+        <Input className='text-xs md:text-sm' id="amount" type="number" placeholder="Enter amount" />
       </Field>
 
       <Field>
-        <FieldLabel className="text-slate-600" htmlFor="note">
+        <FieldLabel className="text-slate-600 text-xs md:text-sm" htmlFor="note">
           Note (Optional)
         </FieldLabel>
-        <Input id="note" type="text" placeholder="Enter note" />
+        <Input className='text-xs md:text-sm' id="note" type="text" placeholder="Enter note" />
       </Field>
 
       <div className="flex gap-3 items-center justify-center">
