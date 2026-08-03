@@ -13,7 +13,7 @@ const ExpenseCard = ({ data }: { data: TransactionData[] }) => {
         </div>
         <div>
           <h2 className="text-lg font-semibold text-slate-700">Expense</h2>
-          <p className="text-sm text-gray-500">
+          <p className="text-xs md:text-sm text-gray-500">
             Total expense list for this month
           </p>
         </div>

@@ -57,7 +57,7 @@ export default function Home() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 items-baseline gap-5 py-2">
       <Tracker />
-      <div className="col-span-2 flex flex-col gap-1  ">
+      <div className="col-span-1 md:col-span-2 flex flex-col gap-1  ">
         <HeroCards />
         <div className="grid grid-cols-1 md:grid-cols-2 items-baseline gap-5 mt-5">
           <IncomeCard data={list.filter((item)=> item.type === "income")}/>

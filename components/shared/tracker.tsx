@@ -34,7 +34,7 @@ const Tracker = () => {
   const [date, setDate] = useState<Date>();
 
   return (
-    <div className="bg-slate-50 p-6 rounded-lg shadow-md flex flex-col gap-3 md:gap">
+    <div className="bg-slate-50 p-6 rounded-lg shadow-md flex flex-col gap-3 md:gap-6">
       <h2 className="text-lg font-semibold">Tracker</h2>
 
       <div className="flex w-full border rounded-lg overflow-hidden text-xs md:text-sm">

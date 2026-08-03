@@ -17,7 +17,7 @@ const CardItems = ({data} : { data: TransactionData[] }) => {
               <p className="text-xs text-gray-500">{ item.date.toLocaleDateString("en-GB") }</p>
             </div>
             <div className="flex items-center gap-2">
-              <p className=" font-semibold text-slate-700">BDT {item.amount.toLocaleString()}</p>
+              <p className=" font-semibold text-slate-700 text-sm">BDT {item.amount.toLocaleString()}</p>
               <div onClick={toggleOpen} className="cursor-pointer">
                 <Eye className="w-4 h-4 text-slate-500" />
               </div>
