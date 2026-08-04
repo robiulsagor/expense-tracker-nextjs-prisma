@@ -3,6 +3,7 @@ import ExpenseCard from "@/components/shared/ExpenseCard";
 import IncomeCard from "@/components/shared/IncomeCard";
 import Tracker from "@/components/shared/tracker";
 import ViewDetails from "@/components/shared/ViewDetails";
+import { testConnection } from "@/lib/db";
 import { TransactionData } from "@/types";
 
 const list : TransactionData[] = [
@@ -53,9 +54,12 @@ const list : TransactionData[] = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  await testConnection();
+
+   
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 items-baseline gap-5 py-2">
+    <div className="grid grid-cols-1 md:grid-cols-3 items-baseline top-1 gap-5 py-2">
       <Tracker />
       <div className="col-span-1 md:col-span-2 flex flex-col gap-1  ">
         <HeroCards />
