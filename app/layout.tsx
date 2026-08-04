@@ -25,12 +25,7 @@ export default function RootLayout({
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
       </head>
       <body className={poppins.className}>
-        <main className="flex justify-center bg-slate-100 p-2 min-h-screen">
-          <div className="w-full sm:w-[95%] md:w-[90%]">
-            <Navbar />
-            {children}
-          </div>
-        </main>
+        {children}
       </body>
     </html>
   );
