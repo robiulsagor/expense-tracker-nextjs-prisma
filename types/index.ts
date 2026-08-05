@@ -9,3 +9,9 @@ export interface TransactionData {
     date: Date;
     note: string;
 }
+
+export interface RegisterFormData {
+    name: string;
+    email: string;
+    password: string;
+}
