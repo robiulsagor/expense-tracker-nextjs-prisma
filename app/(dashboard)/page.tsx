@@ -3,6 +3,7 @@ import ExpenseCard from '@/components/shared/ExpenseCard'
 import IncomeCard from '@/components/shared/IncomeCard'
 import Tracker from '@/components/shared/tracker'
 import ViewDetails from '@/components/shared/ViewDetails'
+import { testConnection } from '@/lib/db'
 import { TransactionData } from '@/types'
 
 const list : TransactionData[] = [
@@ -54,6 +55,8 @@ const list : TransactionData[] = [
 ];
 
 const page = () => {
+  testConnection()
+  
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 items-baseline top-1 gap-5 py-2">
       <Tracker />
