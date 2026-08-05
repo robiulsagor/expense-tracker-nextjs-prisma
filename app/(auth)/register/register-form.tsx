@@ -9,18 +9,33 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 
+import { registerUser } from "@/app/actions/auth/register";
+import { toast } from "react-toastify";
+
 const RegisterForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors ,
+      isSubmitting
+     },
+    setError,
+    
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit = (data: RegisterFormData) => {
-    console.log(data);
+  const onSubmit = async (data: RegisterFormData) => {
+    const result = await registerUser(data);
+
+    if (result.success) {
+      toast.success(result.message); // Display success message using react-toastify
+    } else {
+      toast.error(result.message); // Display error message using react-toastify
+      setError("email", { type: "manual", message: result.message });
+    }
   };
+
   return (
     <div className=" w-full flex flex-col lg:flex-row p-1 lg:p-10 gap-5">
       <TitleCard subtitle="Create a new account" />
@@ -34,7 +49,7 @@ const RegisterForm = () => {
             {...register("name")}
           />
           {errors.name && (
-            <FieldError message={errors.name.message as string}/>
+            <FieldError message={errors.name.message as string} />
           )}
         </div>
 
@@ -46,7 +61,7 @@ const RegisterForm = () => {
             {...register("email")}
           />
           {errors.email && (
-            <FieldError message={errors.email.message as string}/>
+            <FieldError message={errors.email.message as string} />
           )}
         </div>
 
@@ -59,17 +74,19 @@ const RegisterForm = () => {
           />
           {errors.password && (
             <span className="text-red-500 text-xs">
-              <FieldError message={errors.password.message as string}/>
+              <FieldError message={errors.password.message as string} />
             </span>
           )}
         </div>
 
         <Button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md w-full"
+          className="bg-blue-500 text-white px-4 py-2 rounded-md w-full disabled:cursor-not-allowed"
+          disabled={isSubmitting}
         >
           Register
         </Button>
+
         <div className="flex flex-col space-y-2 text-sm text-slate-500">
           <p>
             Don&apos;t have an account?{" "}

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/navbar";
+import { ToastContainer } from 'react-toastify';
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -14,6 +14,8 @@ export const metadata: Metadata = {
   description: "Track your expenses with ease",
 };
 
+
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,7 +27,13 @@ export default function RootLayout({
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
       </head>
       <body className={poppins.className}>
+        <>
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            />
         {children}
+        </>
       </body>
     </html>
   );
