@@ -1,10 +1,11 @@
+import { auth } from '@/auth'
 import HeroCards from '@/components/shared/cards/HeroCards'
 import ExpenseCard from '@/components/shared/ExpenseCard'
 import IncomeCard from '@/components/shared/IncomeCard'
 import Tracker from '@/components/shared/tracker'
 import ViewDetails from '@/components/shared/ViewDetails'
-import { testConnection } from '@/lib/db'
 import { TransactionData } from '@/types'
+import { redirect } from 'next/navigation'
 
 const list : TransactionData[] = [
   {
@@ -54,9 +55,14 @@ const list : TransactionData[] = [
   },
 ];
 
-const page = () => {
-  testConnection()
+const page = async () => {
+  const session = await auth()
+
+  if(!session?.user?.id){
+    redirect("/login")
+  }
   
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 items-baseline top-1 gap-5 py-2">
       <Tracker />
