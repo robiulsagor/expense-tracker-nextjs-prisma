@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm } from "react-hook-form";
 import FieldError from "@/components/shared/auth/FieldError";
+import { login } from "@/app/actions/auth/login";
 
 const LoginForm = () => {
   const {
@@ -19,8 +20,8 @@ const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = (data: LoginFormData) => {
-    console.log(data);
+  const onSubmit = async (data: LoginFormData) => {
+    await login(data.email, data.password);
   };
 
   return (
@@ -36,7 +37,7 @@ const LoginForm = () => {
             {...register("email")}
           />
           {errors.email && (
-            <FieldError message={errors.email.message as string}/>
+            <FieldError message={errors.email.message as string} />
           )}
         </div>
 
@@ -48,7 +49,7 @@ const LoginForm = () => {
             {...register("password")}
           />
           {errors.password && (
-            <FieldError message={errors.password.message as string}/>
+            <FieldError message={errors.password.message as string} />
           )}
         </div>
 

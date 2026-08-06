@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 
 import { registerUser } from "@/app/actions/auth/register";
 import { toast } from "react-toastify";
+import { redirect } from "next/navigation";
 
 const RegisterForm = () => {
   const {
@@ -30,6 +31,7 @@ const RegisterForm = () => {
 
     if (result.success) {
       toast.success(result.message); // Display success message using react-toastify
+      redirect("/login"); // Redirect to login page after successful registration
     } else {
       toast.error(result.message); // Display error message using react-toastify
       setError("email", { type: "manual", message: result.message });
