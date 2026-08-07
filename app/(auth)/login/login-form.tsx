@@ -16,12 +16,20 @@ const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
   });
 
   const onSubmit = async (data: LoginFormData) => {
-    await login(data.email, data.password);
+    const result = await login(data.email, data.password);
+    if (!result.success) {
+      setError("password", {
+        message: result.message,
+      });
+
+      return;
+    }
   };
 
   return (
