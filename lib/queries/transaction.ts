@@ -22,3 +22,11 @@ export async function createTransaction(
   console.log("Transaction created:", result.rows[0]);
   return result.rows[0];
 }
+
+export async function getTransactions(userId: string) {
+  const result = await db.query(
+    "SELECT * FROM transactions WHERE user_id = $1 ORDER BY date DESC",
+    [userId]
+  );
+  return result.rows;
+}

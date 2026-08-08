@@ -3,6 +3,7 @@
 import { auth } from "@/auth";
 import { createTransaction } from "@/lib/queries/transaction";
 import { transactionSchema } from "@/lib/validations/transaction";
+import { revalidatePath } from "next/cache";
 
 export const createTransactionAction = async (data: unknown) => {
   try {
@@ -25,6 +26,8 @@ export const createTransactionAction = async (data: unknown) => {
     }
 
     const transaction = await createTransaction(session.user.id, parsed.data);
+
+    revalidatePath("/");
 
     return {
       success: true,
