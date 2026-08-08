@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import SingleCard from "./SingleCard";
 import MonthSelector from "../MonthSelector";
 
-const HeroCards = () => {
+const HeroCards = ({summary}: { summary: { income: number; expense: number } }) => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
 
   return (
@@ -12,9 +12,9 @@ const HeroCards = () => {
       <MonthSelector currentMonth={currentMonth} setCurrentMonth={setCurrentMonth} />
 
       <div className="flex flex-wrap gap-6">
-        <SingleCard amount={1000} type="income" />
-        <SingleCard amount={500} type="expense" />
-        <SingleCard amount={500} type="balance" />
+        <SingleCard amount={summary.income} type="income" />
+        <SingleCard amount={summary.expense} type="expense" />
+        <SingleCard amount={summary.income - summary.expense} type="balance" />
       </div>
     </div>
   );

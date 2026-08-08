@@ -30,3 +30,26 @@ export async function getTransactions(userId: string) {
   );
   return result.rows;
 }
+
+export async function getTransactionSummary(userId: string) {
+  const result = await db.query(
+    `
+      SELECT
+        COALESCE(
+          SUM(CASE WHEN type = 'income' THEN amount ELSE 0 END),
+          0
+        ) AS income,
+
+        COALESCE(
+          SUM(CASE WHEN type = 'expense' THEN amount ELSE 0 END),
+          0
+        ) AS expense
+
+      FROM transactions
+      WHERE user_id = $1
+    `,
+    [userId]
+  );
+
+  return result.rows[0];
+}
