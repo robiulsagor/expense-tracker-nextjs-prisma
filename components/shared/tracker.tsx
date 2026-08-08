@@ -28,6 +28,8 @@ import {
 } from "@/lib/validations/transaction";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useWatch } from "react-hook-form";
+import { createTransactionAction } from "@/app/actions/transactions/create";
+import { toast } from "react-toastify";
 
 const incomeCategories = [
   "Salary",
@@ -67,6 +69,7 @@ const Tracker = () => {
     handleSubmit,
     formState: { errors },
     control,
+    reset,
     setValue,
   } = useForm<TransactionFormData>({
     resolver: zodResolver(transactionSchema),
@@ -81,8 +84,19 @@ const Tracker = () => {
     },
   });
 
-  const onSubmit = (data: TransactionFormData) => {
+  const onSubmit = async (data: TransactionFormData) => {
     console.log("data submitted", data);
+
+    const result = await createTransactionAction(data);
+
+    if (!result.success) {
+      console.error("Failed to create transaction:", result.message);
+      toast.error(result.message); // Display error message using react-toastify
+    } else {
+      toast.success(result.message); // Display success message using react-toastify
+
+      reset();
+    }
   };
 
   const type = useWatch({
