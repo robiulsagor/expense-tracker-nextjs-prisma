@@ -17,7 +17,6 @@ import { TransactionData } from "@/types";
 const ViewDetails = () => {
   const toggleOpen = useTracker((state) => state.toggle);
 
-
   const selectedTransactionId = useTransactionStore(
     (state) => state.selectedTransactionId,
   );
@@ -49,6 +48,9 @@ const ViewDetails = () => {
 
     fetchTransaction();
   }, [selectedTransactionId]);
+
+  // for editing transaction
+  const startEditingTransaction = useTransactionStore(state => state.startEditingTransaction)
 
   return (
     <Dialog open={isOpen} onOpenChange={closeDetails}>
@@ -98,7 +100,7 @@ const ViewDetails = () => {
 
         <DialogFooter>
           <Button
-            onClick={toggleOpen}
+            onClick={()=> startEditingTransaction(transaction!)}
             className="bg-blue-500 text-white px-4 py-2 rounded-md"
           >
             Edit

@@ -1,3 +1,4 @@
+import { TransactionData } from "@/types";
 import { create } from "zustand";
 
 type TransactionStore = {
@@ -8,6 +9,10 @@ type TransactionStore = {
   showDeleteModal: boolean;
   openDeleteModal: () => void;
   closeDeleteModal: () => void;
+
+  editingTransaction: TransactionData | null;
+  startEditingTransaction: (transaction: TransactionData) => void;
+  cancelEditing: () => void;
 };
 
 export const useTransactionStore = create<TransactionStore>((set) => ({
@@ -24,7 +29,19 @@ export const useTransactionStore = create<TransactionStore>((set) => ({
       isDetailViewOpen: false,
     }),
 
-    showDeleteModal: false,
-    openDeleteModal: () => set({ showDeleteModal: true, }),
-    closeDeleteModal: () => set({ showDeleteModal: false }),
+  showDeleteModal: false,
+  openDeleteModal: () => set({ showDeleteModal: true }),
+  closeDeleteModal: () => set({ showDeleteModal: false }),
+
+  editingTransaction: null,
+  startEditingTransaction: (transaction) =>
+    set({
+      editingTransaction: transaction,
+      isDetailViewOpen: false,
+      selectedTransactionId: null,
+    }),
+  cancelEditing: () =>
+    set({
+      editingTransaction: null,
+    }),
 }));

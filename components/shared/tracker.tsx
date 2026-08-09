@@ -30,6 +30,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useWatch } from "react-hook-form";
 import { createTransactionAction } from "@/app/actions/transactions/create";
 import { toast } from "react-toastify";
+import { useTransactionStore } from "@/store/transaction";
+import { useEffect, useState } from "react";
 
 const incomeCategories = [
   "Salary",
@@ -104,9 +106,46 @@ const Tracker = () => {
     name: "type",
   });
 
+  const editingTransaction = useTransactionStore(
+    (state) => state.editingTransaction,
+  );
+  console.log("Editing Transaction:", editingTransaction);
+
+  useEffect(() => {
+    if (!editingTransaction) return;
+
+    // Populate the form with the editing transaction data
+    reset({
+      type: editingTransaction.type,
+      category: editingTransaction.category,
+      specifically: editingTransaction.specifically ?? "",
+      amount: editingTransaction.amount,
+      note: editingTransaction.note ?? "",
+      date:
+        editingTransaction.date instanceof Date
+          ? format(editingTransaction.date, "yyyy-MM-dd")
+          : editingTransaction.date,
+    });
+  }, [editingTransaction, reset]);
+
+  const cancelEditing = useTransactionStore((state) => state.cancelEditing);
+
+  const cancelEditingTransaction = () => {
+    cancelEditing();
+    reset({
+       type: "income",
+      category: "",
+      specifically:  "",
+      amount: 0,
+      note:  ""
+    }); // Reset the form to default values
+  }
+
   return (
     <div className="bg-slate-50 p-6 rounded-lg shadow-md flex flex-col gap-3 md:gap-4">
-      <h2 className="text-lg font-semibold">Tracker</h2>
+      <h2 className="text-lg font-semibold">
+        {editingTransaction ? "Edit Transaction" : "Add New Transaction"}
+      </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
         <div className="flex w-full border rounded-lg overflow-hidden text-xs md:text-sm">
@@ -296,10 +335,11 @@ const Tracker = () => {
 
         <div className="flex gap-3 items-center justify-center">
           <Button type="submit" className="bg-teal-700 text-white flex-1">
-            Submit
+            {editingTransaction ? "Update" : "Add Transaction"}
           </Button>
-          <Button type="reset" className="bg-red-800 text-white flex-1 ">
-            Reset
+          <Button type="button" onClick={cancelEditingTransaction} className="bg-red-800 text-white flex-1 "
+           >
+            {editingTransaction ? "Cancel" : "Reset"}
           </Button>
         </div>
       </form>
