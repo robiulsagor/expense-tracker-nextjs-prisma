@@ -1,3 +1,5 @@
+"use client"
+
 import { Trash2Icon } from "lucide-react"
 import {
   AlertDialog,
@@ -9,26 +11,24 @@ import {
   AlertDialogHeader,
   AlertDialogMedia,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
-
+import { useTransactionStore } from "@/store/transaction";
 
 const DeleteModal = () => {
+    const showDeleteModal = useTransactionStore((state) => state.showDeleteModal);
+    const closeDeleteModal = useTransactionStore((state) => state.closeDeleteModal);
+
   return (
-    <AlertDialog>
-      <AlertDialogTrigger
-        render={<Button variant="destructive">Delete Chat</Button>}
-      />
-      <AlertDialogContent size="sm">
+    <AlertDialog open={showDeleteModal} onOpenChange={closeDeleteModal}>
+      <AlertDialogContent size="default">
         <AlertDialogHeader>
           <AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
             <Trash2Icon />
           </AlertDialogMedia>
-          <AlertDialogTitle>Delete chat?</AlertDialogTitle>
+          <AlertDialogTitle>Delete Transaction?</AlertDialogTitle>
           <AlertDialogDescription>
-            This will permanently delete this chat conversation. View{" "}
-            <a href="#">Settings</a> delete any memories saved during this chat.
+            This will permanently delete this Transaction. This action cannot be undone. <br/>
+            Are you sure you want to continue?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
