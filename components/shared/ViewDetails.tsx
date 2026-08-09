@@ -7,7 +7,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useTracker } from "@/store";
 import { Button } from "../ui/button";
 import { useTransactionStore } from "@/store/transaction";
 import { useEffect, useState } from "react";
@@ -15,7 +14,6 @@ import { getTransactionByIdAction } from "@/app/actions/transactions/get-transac
 import { TransactionData } from "@/types";
 
 const ViewDetails = () => {
-  const toggleOpen = useTracker((state) => state.toggle);
 
   const selectedTransactionId = useTransactionStore(
     (state) => state.selectedTransactionId,

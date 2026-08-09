@@ -26,16 +26,19 @@ export async function createTransaction(
 export async function getTransactions(userId: string) {
   const result = await db.query(
     "SELECT * FROM transactions WHERE user_id = $1 ORDER BY date DESC",
-    [userId]
+    [userId],
   );
   return result.rows;
 }
 
-export async function getTransactionById(userId: string, transactionId: string) {
+export async function getTransactionById(
+  userId: string,
+  transactionId: string,
+) {
   const result = await db.query(
     `
     SELECT * FROM transactions WHERE user_id = $1 AND id = $2`,
-    [userId, transactionId]
+    [userId, transactionId],
   );
   return result.rows[0];
 }
@@ -57,16 +60,41 @@ export async function getTransactionSummary(userId: string) {
       FROM transactions
       WHERE user_id = $1
     `,
-    [userId]
+    [userId],
   );
 
   return result.rows[0];
 }
 
 export async function deleteTransaction(userId: string, transactionId: number) {
-  const result = await db.query(`
+  const result = await db.query(
+    `
     DELETE FROM transactions WHERE user_id = $1 AND id = $2 RETURNING *
-    `, [userId, transactionId]);
+    `,
+    [userId, transactionId],
+  );
 
-    return result.rows[0]
+  return result.rows[0];
+}
+
+export async function updateTransaction(
+  userId: string,
+  transactionId: number,
+  data: TransactionFormData,
+) {
+  const result = await db.query(`
+    UPDATE transactions SET type = $1, category = $2, specifically = $3, amount = $4, note = $5, date = $6 WHERE user_id = $7 AND id = $8 RETURNING *
+    `,
+    [
+      data.type,
+      data.category,
+      data.specifically || null,
+      data.amount,
+      data.note || null,
+      data.date,
+      userId,
+      transactionId,
+    ]
+  );
+  return result.rows[0];
 }

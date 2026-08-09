@@ -31,7 +31,8 @@ import { useWatch } from "react-hook-form";
 import { createTransactionAction } from "@/app/actions/transactions/create";
 import { toast } from "react-toastify";
 import { useTransactionStore } from "@/store/transaction";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { updateTransactionAction } from "@/app/actions/transactions/update";
 
 const incomeCategories = [
   "Salary",
@@ -74,7 +75,6 @@ const defaultTransactionValues: TransactionFormData = {
   date: new Date().toISOString().split("T")[0],
 };
 
-
 const Tracker = () => {
   const {
     register,
@@ -93,13 +93,12 @@ const Tracker = () => {
   );
   const cancelEditing = useTransactionStore((state) => state.cancelEditing);
 
-    const type = useWatch({
+  const type = useWatch({
     control,
     name: "type",
   });
 
-
-   useEffect(() => {
+  useEffect(() => {
     if (!editingTransaction) return;
 
     // Populate the form with the editing transaction data
@@ -116,9 +115,30 @@ const Tracker = () => {
     });
   }, [editingTransaction, reset]);
 
+   const cancelEditingTransaction = () => {
+    cancelEditing();
+    reset({
+      type: "income",
+      category: "",
+      specifically: "",
+      amount: 0,
+      note: "",
+    }); // Reset the form to default values
+  };
 
   const onSubmit = async (data: TransactionFormData) => {
-    console.log("data submitted", data);
+    if (editingTransaction) {
+      // If editingTransaction exists, update the transaction
+      const result = await updateTransactionAction(editingTransaction.id, data);
+      if (!result.success) {
+        console.error("Failed to update transaction:", result.message);
+        toast.error(result.message); // Display error message using react-toastify
+      } else {
+        toast.success(result.message); // Display success message using react-toastify
+        cancelEditingTransaction();
+      }
+      return;
+    }
 
     const result = await createTransactionAction(data);
 
@@ -132,19 +152,9 @@ const Tracker = () => {
     }
   };
 
-  
   console.log("Editing Transaction:", editingTransaction);
 
-  const cancelEditingTransaction = () => {
-    cancelEditing();
-    reset({
-      type: "income",
-      category: "",
-      specifically: "",
-      amount: 0,
-      note: "",
-    }); // Reset the form to default values
-  };
+ 
 
   return (
     <div className="bg-slate-50 p-6 rounded-lg shadow-md flex flex-col gap-3 md:gap-4">
