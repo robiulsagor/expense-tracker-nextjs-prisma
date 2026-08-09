@@ -31,6 +31,15 @@ export async function getTransactions(userId: string) {
   return result.rows;
 }
 
+export async function getTransactionById(userId: string, transactionId: string) {
+  const result = await db.query(
+    `
+    SELECT * FROM transactions WHERE user_id = $1 AND id = $2`,
+    [userId, transactionId]
+  );
+  return result.rows[0];
+}
+
 export async function getTransactionSummary(userId: string) {
   const result = await db.query(
     `

@@ -9,60 +9,110 @@ import {
 } from "@/components/ui/dialog";
 import { useTracker } from "@/store";
 import { Button } from "../ui/button";
+import { useTransactionStore } from "@/store/transaction";
+import { useEffect, useState } from "react";
+import { getTransactionByIdAction } from "@/app/actions/transactions/get-transaction";
+import { TransactionData } from "@/types";
 
 const ViewDetails = () => {
-  const isOpen = useTracker((state) => state.isOpen);
   const toggleOpen = useTracker((state) => state.toggle);
 
+
+  const selectedTransactionId = useTransactionStore(
+    (state) => state.selectedTransactionId,
+  );
+
+  const isOpen = useTransactionStore((state) => state.isDetailViewOpen);
+
+  const closeDetails = useTransactionStore((state) => state.closeDetails);
+  const [transaction, setTransaction] = useState<TransactionData | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!selectedTransactionId) {
+      return;
+    }
+
+    const fetchTransaction = async () => {
+      setLoading(true);
+
+      const result = await getTransactionByIdAction(selectedTransactionId);
+      if (result.success) {
+        setTransaction(result.data);
+      } else {
+        console.error(result.message);
+      }
+      setLoading(false);
+    };
+
+    fetchTransaction();
+  }, [selectedTransactionId]);
+
+  console.log("Selected Transaction ID:", selectedTransactionId);
+  if(transaction) {
+    console.log("Transaction Data:", transaction);
+  }
+
   return (
-    <Dialog open={isOpen} onOpenChange={toggleOpen}>
+    <Dialog open={isOpen} onOpenChange={closeDetails}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-slate-700 border-b">
             Detail View
           </DialogTitle>
         </DialogHeader>
-        <div className=" ">
-          <div className="mt-3 flex flex-col gap-2">
-            <div>
-              <p className="text-sm text-gray-500">Category</p>
-              <p className="text-base font-semibold text-slate-700">Salary</p>
-            </div>
+        {loading ? (
+          <div className="flex items-center justify-center h-32">
+            <p className="text-gray-500">Loading...</p>
+          </div>
+        ) : transaction ? (
+          <div className=" ">
+            <div className="mt-3 flex flex-col gap-2">
+              <div>
+                <p className="text-sm text-gray-500">Category</p>
+                <p className="text-base font-semibold text-slate-700">
+                  {transaction.category}
+                </p>
+              </div>
 
-            <div>
-              <p className="text-sm text-gray-500">Specifically...</p>
-              <p className="text-base font-semibold text-slate-700">Salary</p>
-            </div>
+              <div>
+                <p className="text-sm text-gray-500">Specifically...</p>
+                <p className="text-base font-semibold text-slate-700">
+                  {transaction.specifically}
+                </p>
+              </div>
 
-            <div>
-              <p className="text-sm text-gray-500">Amount</p>
-              <p className="text-base font-semibold text-slate-700">5000</p>
-            </div>
+              <div>
+                <p className="text-sm text-gray-500">Amount</p>
+                <p className="text-base font-semibold text-slate-700">
+                  BDT {transaction.amount.toLocaleString()}
+                </p>
+              </div>
 
-            <div>
-              <p className="text-sm text-gray-500">Note</p>
-              <p className="text-base font-semibold text-slate-700">
-                Some note about the transaction here......
-              </p>
+              <div>
+                <p className="text-sm text-gray-500">Note</p>
+                <p className="text-base font-semibold text-slate-700">
+                  {transaction.note}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        ) : null}
 
         <DialogFooter>
           <Button
             onClick={toggleOpen}
             className="bg-blue-500 text-white px-4 py-2 rounded-md"
           >
-          Edit
+            Edit
           </Button>
           <Button
-          variant="destructive"
+            variant="destructive"
             onClick={toggleOpen}
             className=" px-4 py-2 rounded-md"
           >
-          Delete
+            Delete
           </Button>
-          
         </DialogFooter>
       </DialogContent>
     </Dialog>
