@@ -5,6 +5,9 @@ type TransactionStore = {
   isDetailViewOpen: boolean;
   openDetails: (id: number | null) => void;
   closeDetails: () => void;
+  showDeleteModal: boolean;
+  openDeleteModal: () => void;
+  closeDeleteModal: () => void;
 };
 
 export const useTransactionStore = create<TransactionStore>((set) => ({
@@ -20,4 +23,8 @@ export const useTransactionStore = create<TransactionStore>((set) => ({
       selectedTransactionId: null,
       isDetailViewOpen: false,
     }),
+
+    showDeleteModal: false,
+    openDeleteModal: () => set({ showDeleteModal: true, }),
+    closeDeleteModal: () => set({ showDeleteModal: false }),
 }));
