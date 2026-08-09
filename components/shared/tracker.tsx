@@ -133,13 +133,13 @@ const Tracker = () => {
   const cancelEditingTransaction = () => {
     cancelEditing();
     reset({
-       type: "income",
+      type: "income",
       category: "",
-      specifically:  "",
+      specifically: "",
       amount: 0,
-      note:  ""
+      note: "",
     }); // Reset the form to default values
-  }
+  };
 
   return (
     <div className="bg-slate-50 p-6 rounded-lg shadow-md flex flex-col gap-3 md:gap-4">
@@ -150,9 +150,8 @@ const Tracker = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
         <div className="flex w-full border rounded-lg overflow-hidden text-xs md:text-sm">
           <button
-          type="button"
+            type="button"
             onClick={() => setValue("type", "expense")}
-            {...register("type")}
             className={`flex-1 text-center py-2 cursor-pointer  ${type === "expense" ? "bg-teal-700 text-white" : "hover:bg-teal-50"}`}
           >
             Expense
@@ -160,7 +159,6 @@ const Tracker = () => {
           <button
             type="button"
             onClick={() => setValue("type", "income")}
-            {...register("type")}
             className={`flex-1 text-center py-2 cursor-pointer  ${type === "income" ? "bg-teal-700 text-white" : "hover:bg-teal-50 "}`}
           >
             Income
@@ -339,8 +337,11 @@ const Tracker = () => {
           <Button type="submit" className="bg-teal-700 text-white flex-1">
             {editingTransaction ? "Update" : "Add Transaction"}
           </Button>
-          <Button type="button" onClick={cancelEditingTransaction} className="bg-red-800 text-white flex-1 "
-           >
+          <Button
+            type="button"
+            onClick={cancelEditingTransaction}
+            className="bg-red-800 text-white flex-1 "
+          >
             {editingTransaction ? "Cancel" : "Reset"}
           </Button>
         </div>
