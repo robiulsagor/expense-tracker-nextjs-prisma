@@ -24,6 +24,8 @@ const ViewDetails = () => {
 
   const isOpen = useTransactionStore((state) => state.isDetailViewOpen);
 
+  const showDeleteModal = useTransactionStore(state => state.openDeleteModal)
+
   const closeDetails = useTransactionStore((state) => state.closeDetails);
   const [transaction, setTransaction] = useState<TransactionData | null>(null);
   const [loading, setLoading] = useState(false);
@@ -108,7 +110,7 @@ const ViewDetails = () => {
           </Button>
           <Button
             variant="destructive"
-            onClick={toggleOpen}
+            onClick={() => showDeleteModal()}
             className=" px-4 py-2 rounded-md"
           >
             Delete
