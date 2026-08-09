@@ -7,6 +7,7 @@ import ViewDetails from '@/components/shared/ViewDetails'
 // import { TransactionData } from '@/types'
 import { redirect } from 'next/navigation'
 import { getTransactions, getTransactionSummary } from '@/lib/queries/transaction'
+import DeleteModal from '@/components/shared/DeleteModal'
 
 
 const Dashboard = async () => {
@@ -31,6 +32,7 @@ const Dashboard = async () => {
       </div>
 
       <ViewDetails />
+      <DeleteModal />
     </div>
   )
 }
