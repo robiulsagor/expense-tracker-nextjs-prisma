@@ -50,11 +50,6 @@ const ViewDetails = () => {
     fetchTransaction();
   }, [selectedTransactionId]);
 
-  console.log("Selected Transaction ID:", selectedTransactionId);
-  if(transaction) {
-    console.log("Transaction Data:", transaction);
-  }
-
   return (
     <Dialog open={isOpen} onOpenChange={closeDetails}>
       <DialogContent>

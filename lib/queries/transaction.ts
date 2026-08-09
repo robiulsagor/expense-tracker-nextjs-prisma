@@ -62,3 +62,11 @@ export async function getTransactionSummary(userId: string) {
 
   return result.rows[0];
 }
+
+export async function deleteTransaction(userId: string, transactionId: number) {
+  const result = await db.query(`
+    DELETE FROM transactions WHERE user_id = $1 AND id = $2 RETURNING *
+    `, [userId, transactionId]);
+
+    return result.rows[0]
+}
