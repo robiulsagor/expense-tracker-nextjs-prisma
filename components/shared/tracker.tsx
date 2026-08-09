@@ -150,6 +150,7 @@ const Tracker = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
         <div className="flex w-full border rounded-lg overflow-hidden text-xs md:text-sm">
           <button
+          type="button"
             onClick={() => setValue("type", "expense")}
             {...register("type")}
             className={`flex-1 text-center py-2 cursor-pointer  ${type === "expense" ? "bg-teal-700 text-white" : "hover:bg-teal-50"}`}
@@ -157,6 +158,7 @@ const Tracker = () => {
             Expense
           </button>
           <button
+            type="button"
             onClick={() => setValue("type", "income")}
             {...register("type")}
             className={`flex-1 text-center py-2 cursor-pointer  ${type === "income" ? "bg-teal-700 text-white" : "hover:bg-teal-50 "}`}
