@@ -65,6 +65,16 @@ export type Inputs = {
   note: string;
 };
 
+const defaultTransactionValues: TransactionFormData = {
+  type: "income",
+  category: "",
+  specifically: "",
+  amount: 0,
+  note: "",
+  date: new Date().toISOString().split("T")[0],
+};
+
+
 const Tracker = () => {
   const {
     register,
@@ -75,43 +85,21 @@ const Tracker = () => {
     setValue,
   } = useForm<TransactionFormData>({
     resolver: zodResolver(transactionSchema),
-
-    defaultValues: {
-      type: "income",
-      category: "",
-      specifically: "",
-      amount: 0,
-      note: "",
-      date: new Date().toISOString().split("T")[0],
-    },
-  });
-
-  const onSubmit = async (data: TransactionFormData) => {
-    console.log("data submitted", data);
-
-    const result = await createTransactionAction(data);
-
-    if (!result.success) {
-      console.error("Failed to create transaction:", result.message);
-      toast.error(result.message); // Display error message using react-toastify
-    } else {
-      toast.success(result.message); // Display success message using react-toastify
-
-      reset();
-    }
-  };
-
-  const type = useWatch({
-    control,
-    name: "type",
+    defaultValues: defaultTransactionValues,
   });
 
   const editingTransaction = useTransactionStore(
     (state) => state.editingTransaction,
   );
-  console.log("Editing Transaction:", editingTransaction);
+  const cancelEditing = useTransactionStore((state) => state.cancelEditing);
 
-  useEffect(() => {
+    const type = useWatch({
+    control,
+    name: "type",
+  });
+
+
+   useEffect(() => {
     if (!editingTransaction) return;
 
     // Populate the form with the editing transaction data
@@ -128,7 +116,24 @@ const Tracker = () => {
     });
   }, [editingTransaction, reset]);
 
-  const cancelEditing = useTransactionStore((state) => state.cancelEditing);
+
+  const onSubmit = async (data: TransactionFormData) => {
+    console.log("data submitted", data);
+
+    const result = await createTransactionAction(data);
+
+    if (!result.success) {
+      console.error("Failed to create transaction:", result.message);
+      toast.error(result.message); // Display error message using react-toastify
+    } else {
+      toast.success(result.message); // Display success message using react-toastify
+
+      reset();
+    }
+  };
+
+  
+  console.log("Editing Transaction:", editingTransaction);
 
   const cancelEditingTransaction = () => {
     cancelEditing();
