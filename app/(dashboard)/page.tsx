@@ -10,15 +10,21 @@ import { getTransactions, getTransactionSummary } from '@/lib/queries/transactio
 import DeleteModal from '@/components/shared/DeleteModal'
 
 
-const Dashboard = async () => {
+
+const Dashboard = async ({searchParams}: { searchParams: { month?: string; year?: string } }) => {
+  const params = await searchParams;
+  const month = params.month ? Number(params.month) : new Date().getMonth();
+  const year = params.year ? Number(params.year) : new Date().getFullYear();
+  console.log("Month:", month, "Year:", year);
+
   const session = await auth()
 
   if(!session?.user?.id){
     redirect("/login")
   }
 
-  const transactions = await getTransactions(session.user.id);
-  const transactionSummary = await getTransactionSummary(session.user.id);
+  const transactions = await getTransactions(session.user.id, month, year);
+  const transactionSummary = await getTransactionSummary(session.user.id, month, year);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 items-baseline top-1 gap-5 py-2">

@@ -1,15 +1,30 @@
-"use client"
+"use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SingleCard from "./SingleCard";
 import MonthSelector from "../MonthSelector";
+import { useRouter } from "next/navigation";
 
-const HeroCards = ({summary}: { summary: { income: number; expense: number } }) => {
-    const [currentMonth, setCurrentMonth] = useState(new Date());
+const HeroCards = ({
+  summary,
+}: {
+  summary: { income: number; expense: number };
+}) => {
+  const router = useRouter();
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+
+  useEffect(() => {
+    router.push(
+      `?month=${currentMonth.getMonth() + 1}&year=${currentMonth.getFullYear()}`,
+    );
+  }, [currentMonth, router]);
 
   return (
     <div className=" bg-slate-50 p-6 rounded-lg shadow-md">
-      <MonthSelector currentMonth={currentMonth} setCurrentMonth={setCurrentMonth} />
+      <MonthSelector
+        currentMonth={currentMonth}
+        setCurrentMonth={setCurrentMonth}
+      />
 
       <div className="flex flex-wrap gap-6">
         <SingleCard amount={summary.income} type="income" />
