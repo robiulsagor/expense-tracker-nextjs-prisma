@@ -89,7 +89,7 @@ const Tracker = () => {
     defaultValues: defaultTransactionValues,
   });
 
-  const formRef = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
 
   const editingTransaction = useTransactionStore(
     (state) => state.editingTransaction,
@@ -159,13 +159,14 @@ const Tracker = () => {
 
 
   return (
-    <div className="bg-slate-50 p-6 rounded-lg shadow-md flex flex-col gap-3 md:gap-4">
+    <div className="bg-slate-50 p-6 rounded-lg shadow-md flex flex-col gap-3 md:gap-4"
+    ref={formRef}>
       <h2 className="text-lg font-semibold">
         {editingTransaction ? "Edit Transaction" : "Add New Transaction"}
       </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3"
-      ref={formRef}>
+      >
         <div className="flex w-full border rounded-lg overflow-hidden text-xs md:text-sm">
           <button
             type="button"
