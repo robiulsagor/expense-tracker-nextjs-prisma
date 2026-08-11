@@ -152,9 +152,6 @@ const Tracker = () => {
     }
   };
 
-  console.log("Editing Transaction:", editingTransaction);
-
- 
 
   return (
     <div className="bg-slate-50 p-6 rounded-lg shadow-md flex flex-col gap-3 md:gap-4">
