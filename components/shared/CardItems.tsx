@@ -7,12 +7,17 @@ const CardItems = ({ data }: { data: TransactionData[] }) => {
 
   return (
     <div className="mt-4">
-      {data.map((item) => (
-        <div
-          key={item.id}
-          className="flex items-center justify-between border-b border-slate-200 py-2"
-        >
-          <div>
+      {data.length == 0 ? (
+        <p className="text-sm text-slate-500 text-center">
+          No transactions found.
+        </p>
+      ) : (
+        data.map((item) => (
+          <div
+            key={item.id}
+            className="flex items-center justify-between border-b border-slate-200 py-2"
+          >
+            <div>
             <h3 className="text-sm font-medium text-slate-700">
               {item.category}
             </h3>
@@ -32,7 +37,7 @@ const CardItems = ({ data }: { data: TransactionData[] }) => {
             </div>
           </div>
         </div>
-      ))}
+     ) ))}
     </div>
   );
 };
