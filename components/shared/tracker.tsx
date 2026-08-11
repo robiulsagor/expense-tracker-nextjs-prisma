@@ -353,8 +353,8 @@ const Tracker = () => {
           />
         </Field>
 
-        <div className="flex gap-3 items-center justify-center">
-          <Button type="submit" className="bg-teal-700 text-white flex-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent active:scale-90 disabled:active:scale-100"
+        <div className="flex gap-3 items-center justify-center ">
+          <Button type="submit" className="bg-teal-700 text-white flex-1 text-xs sm:text-sm md:text-base disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent active:scale-90 disabled:active:scale-100"
           disabled={isSubmitting}>
             {
               isSubmitting ? (<Spinner className="text-white" />) : (
@@ -365,7 +365,7 @@ const Tracker = () => {
           <Button
             type="button"
             onClick={cancelEditingTransaction}
-            className="bg-red-800 text-white flex-1 "
+            className="bg-red-800 text-white flex-1 text-xs sm:text-sm md:text-base disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent active:scale-90 disabled:active:scale-100"
           >
             {editingTransaction ? "Cancel" : "Reset"}
           </Button>
