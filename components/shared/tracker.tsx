@@ -33,6 +33,7 @@ import { toast } from "react-toastify";
 import { useTransactionStore } from "@/store/transaction";
 import { useEffect } from "react";
 import { updateTransactionAction } from "@/app/actions/transactions/update";
+import { Spinner } from "../ui/spinner";
 
 const incomeCategories = [
   "Salary",
@@ -79,7 +80,7 @@ const Tracker = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     control,
     reset,
     setValue,
@@ -347,8 +348,13 @@ const Tracker = () => {
         </Field>
 
         <div className="flex gap-3 items-center justify-center">
-          <Button type="submit" className="bg-teal-700 text-white flex-1">
-            {editingTransaction ? "Update" : "Add Transaction"}
+          <Button type="submit" className="bg-teal-700 text-white flex-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent active:scale-90 disabled:active:scale-100"
+          disabled={isSubmitting}>
+            {
+              isSubmitting ? (<Spinner className="text-white" />) : (
+                editingTransaction ? "Update" : "Add Transaction"
+              )
+            }
           </Button>
           <Button
             type="button"
