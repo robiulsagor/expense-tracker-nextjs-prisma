@@ -11,7 +11,7 @@ const MonthSelector = () => {
   const [isPending, startTransition] = useTransition();
   const searchParams = useSearchParams();
 
-  const month = Number(searchParams.get("month")) || new Date().getMonth();
+  const month = Number(searchParams.get("month")) || new Date().getMonth()+1;
   const year = Number(searchParams.get("year")) || new Date().getFullYear();
 
   const date = new Date(year, month, 1);
@@ -20,9 +20,10 @@ const MonthSelector = () => {
     const newDate = date.getMonth() - 1;
 
     startTransition(() => {
-      router.push(`?month=${newDate}&year=${date.getFullYear()}`, {
-        scroll: false,
-      });
+      router.push(`?month=${newDate}&year=${date.getFullYear()}`, 
+    {
+      scroll: false,
+    });
     });
   };
   const isNextMonthDisabled =
@@ -34,20 +35,22 @@ const MonthSelector = () => {
 
     const newDate = date.getMonth() + 1;
     startTransition(() => {
-      router.push(`?month=${newDate}&year=${date.getFullYear()}`, {
-        scroll: false,
-      });
+      router.push(`?month=${newDate}&year=${date.getFullYear()}`, 
+    {
+      scroll: false,
+    });
     });
   };
 
   // if there is no month and year in the search params, set it to the current month and year
   useEffect(() => {
     startTransition(() => {
-      router.push(`?month=${date.getMonth() + 1}&year=${date.getFullYear()}`, {
-        scroll: false,
-      });
+      router.push(`?month=${date.getMonth()}&year=${date.getFullYear()}`, 
+    {
+      scroll: false,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

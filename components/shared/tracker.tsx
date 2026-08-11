@@ -31,7 +31,7 @@ import { useWatch } from "react-hook-form";
 import { createTransactionAction } from "@/app/actions/transactions/create";
 import { toast } from "react-toastify";
 import { useTransactionStore } from "@/store/transaction";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { updateTransactionAction } from "@/app/actions/transactions/update";
 import { Spinner } from "../ui/spinner";
 
@@ -89,6 +89,8 @@ const Tracker = () => {
     defaultValues: defaultTransactionValues,
   });
 
+  const formRef = useRef<HTMLFormElement>(null);
+
   const editingTransaction = useTransactionStore(
     (state) => state.editingTransaction,
   );
@@ -114,6 +116,8 @@ const Tracker = () => {
           ? format(editingTransaction.date, "yyyy-MM-dd")
           : editingTransaction.date,
     });
+
+    formRef.current?.scrollIntoView({behavior: "smooth", block: "start"});  
   }, [editingTransaction, reset]);
 
    const cancelEditingTransaction = () => {
@@ -160,7 +164,8 @@ const Tracker = () => {
         {editingTransaction ? "Edit Transaction" : "Add New Transaction"}
       </h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3"
+      ref={formRef}>
         <div className="flex w-full border rounded-lg overflow-hidden text-xs md:text-sm">
           <button
             type="button"
