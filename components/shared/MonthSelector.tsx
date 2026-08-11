@@ -39,8 +39,9 @@ const MonthSelector = () => {
   // if there is no month and year in the search params, set it to the current month and year
   useEffect(() => {
     startTransition(() => {
-      router.push(`?month=${date.getMonth()}&year=${date.getFullYear()}`);
+      router.push(`?month=${date.getMonth()+1}&year=${date.getFullYear()}`);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
