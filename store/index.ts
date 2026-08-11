@@ -10,3 +10,7 @@ export const useTracker = create<Store>((set) => ({
     toggle: () => set((state) => ({ isOpen: !state.isOpen })),
 }))
 
+export const useSidebar = create<Store>(set => ({
+  isOpen: false,
+  toggle: () => set(state => ({ isOpen: !state.isOpen })),
+}))

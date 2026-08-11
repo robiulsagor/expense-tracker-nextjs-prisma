@@ -2,12 +2,10 @@ import { auth } from "@/auth";
 import { UserCircleIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { logout } from "@/app/actions/auth/logout";
+import SidebarWrapper from "./SidebarWrapper";
 
 const Navbar = async () => {
   const session = await auth();
-  // if (!session?.user?.id) {
-  //   return null;
-  // }
 
   return (
     <div className="flex items-center justify-between py-4 border-b border-slate-300">
@@ -36,6 +34,9 @@ const Navbar = async () => {
           </form>
         </div>
       </div>
+
+      {/*sidebar for small screen */}
+      <SidebarWrapper />
     </div>
   );
 };
