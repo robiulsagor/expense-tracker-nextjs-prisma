@@ -35,6 +35,7 @@ const MonthSelector = ({
       <button
         className="border border-slate-400 hover:bg-slate-200 transition p-1 rounded cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent *:active:scale-90 active:scale-90 disabled:active:scale-100"
         onClick={handlePrevMonth}
+        aria-label="Go to Previous Month"
       >
         <ChevronLeft size={20} className="text-slate-600 " />
       </button>
@@ -47,6 +48,7 @@ const MonthSelector = ({
         className="border border-slate-400 hover:bg-slate-200 transition p-1 rounded cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent active:scale-90 disabled:active:scale-100"
         onClick={handlenextMonth}
         disabled={isNextMonthDisabled}
+        aria-label="Go to Next Month"
       >
         <ChevronLeft size={20} className="text-slate-600 rotate-180" />
       </button>

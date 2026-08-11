@@ -198,6 +198,7 @@ const Tracker = () => {
               >
                 <SelectTrigger
                   className={`w-full ${errors.category ? "border-red-500" : ""}`}
+                  aria-label="Select a category"
                 >
                   <SelectValue
                     className="text-xs md:text-sm"
