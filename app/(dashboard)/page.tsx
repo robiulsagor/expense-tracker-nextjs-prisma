@@ -8,6 +8,7 @@ import ViewDetails from '@/components/shared/ViewDetails'
 import { redirect } from 'next/navigation'
 import { getTransactions, getTransactionSummary } from '@/lib/queries/transaction'
 import DeleteModal from '@/components/shared/DeleteModal'
+import { Suspense } from 'react'
 
 
 
@@ -32,8 +33,10 @@ const Dashboard = async ({searchParams}: { searchParams: { month?: string; year?
       <div className="col-span-1 md:col-span-2 flex flex-col gap-1  ">
         <HeroCards summary={transactionSummary} />
         <div className="grid grid-cols-1 md:grid-cols-2 items-baseline gap-5 mt-5">
+          <Suspense fallback={<div>Loading Income Card...</div>}>
           <IncomeCard data={transactions.filter((item)=> item.type === "income")}/>
           <ExpenseCard data={transactions.filter((item)=> item.type === "expense")}/>
+          </Suspense>
         </div>
       </div>
 
