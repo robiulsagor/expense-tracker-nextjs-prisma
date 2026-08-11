@@ -4,6 +4,7 @@ import { formatMonth } from "@/lib/helper";
 import { ChevronLeft } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useTransition } from "react";
+import { Spinner } from "../ui/spinner";
 
 const MonthSelector = () => {
   const router = useRouter();
@@ -54,11 +55,14 @@ const MonthSelector = () => {
         <ChevronLeft size={20} className="text-slate-600 " />
       </button>
 
-      <p
-        className={`min-w-40 text-center ${isPending ? "text-slate-300" : "text-slate-500"}`}
-      >
-        {formatMonth(date)}
-      </p>
+      <div className="flex items-center gap-0.5">
+        <p
+          className={`min-w-40 text-center ${isPending ? "text-slate-300" : "text-slate-500"}`}
+        >
+          {formatMonth(date)}
+        </p>
+        {isPending && <Spinner />}
+      </div>
 
       <button
         className="border border-slate-400 hover:bg-slate-200 transition p-1 rounded cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent active:scale-90 disabled:active:scale-100"

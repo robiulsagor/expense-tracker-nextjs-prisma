@@ -28,12 +28,15 @@ export async function getTransactions(
   month: number,
   year: number,
 ) {
+  const start = performance.now();
   const result = await db.query(
     " SELECT * FROM transactions WHERE user_id = $1 AND date >= make_date($2, $3, 1) AND date < make_date($2, $3, 1) + INTERVAL '1 month'      ORDER BY date DESC",
     [userId, year, month],
   );
 
-  console.log(result.rows);
+  console.log(
+    `getTransactions: ${performance.now() - start}ms`
+  );
   return result.rows;
 }
 
@@ -54,6 +57,8 @@ export async function getTransactionSummary(
   month: number,
   year: number,
 ) {
+  const start = performance.now();
+
   const result = await db.query(
     `
       SELECT
@@ -73,7 +78,9 @@ export async function getTransactionSummary(
     `,
     [userId, year, month],
   );
-
+ console.log(
+    `getTransactionSummary: ${performance.now() - start}ms`
+  );
   return result.rows[0];
 }
 
